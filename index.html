@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>오늘의 포춘쿠키</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffe9b3, #ffcd88, #ffb36a);
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 22px 26px;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      font-size: 12px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #fff4db;
+      color: #c27b1b;
+      font-weight: 600;
+    }
+
+    .cookie {
+      font-size: 54px;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 4px;
+      font-weight: 800;
+      color: #ff8a23;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      font-size: 13px;
+      color: #666666;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #999999;
+      margin-bottom: 18px;
+    }
+
+    .fortune-box {
+      background: #fff8ec;
+      border-radius: 14px;
+      padding: 16px 14px;
+      margin-bottom: 18px;
+      border: 1px dashed #ffb25a;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fortune-text {
+      font-size: 15px;
+      color: #333333;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, #ff9c3c, #ff7b24);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 114, 32, 0.65);
+    }
+
+    .btn-sub {
+      background: #f4f4f4;
+      color: #555555;
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: none;
+      opacity: 0.9;
+    }
+
+    .footer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #aaaaaa;
+    }
+
+    .brand {
+      font-weight: 700;
+      color: #ff8a23;
+    }
+
+    @media (max-width: 400px) {
+      .card {
+        padding: 24px 18px 22px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .fortune-text {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="badge">오늘만 열리는 한 마디</div>
+      <div class="cookie">🥠</div>
+      <h1>오늘의 포춘쿠키</h1>
+      <p class="sub">
+        키링을 찍어준 당신에게 도착한<br />
+        작은 응원 한 조각
+      </p>
+      <div class="date" id="dateText"></div>
+
+      <div class="fortune-box">
+        <div class="fortune-text" id="fortuneText">
+          포춘쿠키를 열면<br />오늘의 메시지가 나타납니다.
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="btn btn-main" onclick="openCookie()">
+          🔓 포춘쿠키 열기
+        </button>
+        <button class="btn btn-sub" onclick="shuffleFortune()">
+          🔁 한 번 더 뽑기
+        </button>
+      </div>
+
+      <div class="footer">
+        오늘도 <span class="brand">하이텍 포춘</span>이 응원합니다. ✨
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 오늘 날짜 표시
+    function setToday() {
+      const dateEl = document.getElementById("dateText");
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const day = now.getDate().toString().padStart(2, "0");
+      const weekdayNames = ["일", "월", "화", "수", "목", "금", "토"];
+      const weekday = weekdayNames[now.getDay()];
+      dateEl.textContent = year + "년 " + month + "월 " + day + "일 " + "(" + weekday + ")";
+    }
+
+    // 랜덤 운세 목록 (원하면 이 문구들 마음대로 바꿔도 됨!)
+    const fortunes = [
+      "오늘은 생각보다 일이 잘 풀리는 날. 너무 겁먹지 말고 한 걸음만 더 나가도 좋음.",
+      "지금 하고 있는 선택이 앞으로 꽤 큰 힘이 될 예정. 꾸준함이 곧 능력임.",
+      "오늘 만나는 사람 중 누군가는 너를 꽤 괜찮게 보고 있음. 스스로를 너무 깎아내리지 말기.",
+      "평소에 미뤄둔 일을 하나만 정해서 끝내보자. 그 한 가지가 오늘 운세를 끌어올려 줌.",
+      "실수해도 괜찮음. 중요한 건 오늘 다시 시작했다는 사실 자체임.",
+      "작은 친절 하나가 생각보다 멀리 퍼져 나가는 날. 먼저 웃어주면 이득.",
+      "오늘은 몸과 멘탈 리셋하는 날로 잡아도 좋음. 쉬는 것도 생산적인 선택임.",
+      "지금 걱정하는 일의 절반 이상은 실제로는 일어나지 않을 확률이 높음.",
+      "오늘 떠오른 아이디어는 그냥 지나치기 아까움. 메모라도 꼭 해두기.",
+      "너무 완벽하려고만 하지 말기. 80퍼센트의 완성도도 충분히 멋짐.",
+      "오늘은 새로운 시도를 해볼 운세. 평소라면 안 할 선택을 한 번 골라봐도 좋음.",
+      "네가 생각하는 것보다 이미 잘하고 있음. 스스로에게 조금만 더 친절해지기.",
+      "우연처럼 보이는 만남과 말 한마디가 오늘 하루의 분위기를 바꿔줄 수도 있음.",
+      "컨디션이 조금 떨어진다면, 잠깐 산책이나 스트레칭만 해도 분위기가 확 달라짐.",
+      "오늘은 '고마워'라는 말을 자주 쓸수록 운이 올라가는 날.",
+      "지금 하고 있는 고민, 누군가에게 솔직하게 털어놓으면 의외의 해결책이 나올 수도 있음.",
+      "조용히 집중할 수 있는 짧은 시간만 확보해도, 원하는 것의 방향이 보이기 시작함.",
+      "오늘 하루의 포인트는 속도보다 방향. 어디로 가는지 한 번만 더 점검해보기.",
+      "예상 못 한 칭찬이나 좋은 피드백을 받을 수 있는 날. 너무 겸손하게 밀어내지 말기.",
+      "네가 즐거워 보이면 주변 사람들도 덩달아 힘을 얻음. 오늘은 너의 무드가 곧 분위기.",
+      "평소보다 조금만 더 정리정돈을 해보면, 머릿속까지 같이 정리되는 느낌이 들 수 있음.",
+      "괜히 비교하다가 기분 상하지 말 것. 너는 너만의 속도로 충분히 잘 가는 중.",
+      "오늘 시작한 작은 습관 하나가 다음 달의 너를 꽤 달라 보이게 만들 예정.",
+      "포기하고 싶었던 일도, 오늘 한 번만 더 붙잡고 있으면 흐름이 다시 돌아올 수 있음.",
+      "생각보다 너를 응원하는 사람이 많음. 오늘은 그 응원을 조금만 더 믿어줘도 좋음."
+    ];
+
+    function getRandomFortune() {
+      const index = Math.floor(Math.random() * fortunes.length);
+      return fortunes[index];
+    }
+
+    function openCookie() {
+      const textEl = document.getElementById("fortuneText");
+      textEl.textContent = getRandomFortune();
+    }
+
+    function shuffleFortune() {
+      const textEl = document.getElementById("fortuneText");
+      textEl.textContent = getRandomFortune();
+    }
+
+    // 페이지 열리면 날짜 세팅 + 자동으로 한 번 뽑아주기
+    setToday();
+    openCookie();
+  </script>
+</body>
+</html>
