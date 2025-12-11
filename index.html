@@ -17,20 +17,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, #ffe9b3, #ffcd88, #ffb36a);
+      background: radial-gradient(circle at top, #ffe0aa, #ffc577, #ffb05e);
     }
 
     .wrapper {
       width: 100%;
-      max-width: 480px;
-      padding: 24px;
+      max-width: 540px; /* 카드 전체 살짝 키움 */
+      padding: 28px;
     }
 
     .card {
       background: #ffffff;
-      border-radius: 20px;
-      padding: 28px 22px 26px;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+      border-radius: 24px;
+      padding: 36px 30px 30px; /* 패딩 살짝 키움 */
+      box-shadow: 0 14px 32px rgba(0,0,0,0.20);
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -38,10 +38,10 @@
 
     .badge {
       position: absolute;
-      top: 14px;
-      left: 18px;
-      font-size: 12px;
-      padding: 4px 9px;
+      top: 16px;
+      left: 22px;
+      font-size: 13px;
+      padding: 5px 11px;
       border-radius: 999px;
       background: #fff4db;
       color: #c27b1b;
@@ -49,54 +49,54 @@
     }
 
     .cookie {
-      font-size: 54px;
-      margin-top: 6px;
-      margin-bottom: 8px;
+      font-size: 64px; /* 쿠키 조금 키움 */
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 4px;
+      font-size: 26px; /* 제목 조금 키움 */
+      margin-bottom: 6px;
       font-weight: 800;
       color: #ff8a23;
       letter-spacing: -0.03em;
     }
 
     .sub {
-      font-size: 13px;
+      font-size: 14px;
       color: #666666;
-      margin-bottom: 18px;
-      line-height: 1.5;
+      margin-bottom: 22px;
+      line-height: 1.6;
     }
 
     .date {
-      font-size: 12px;
+      font-size: 13px;
       color: #999999;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
     .fortune-box {
       background: #fff8ec;
-      border-radius: 14px;
-      padding: 16px 14px;
-      margin-bottom: 18px;
+      border-radius: 16px;
+      padding: 20px 16px;
+      margin-bottom: 22px;
       border: 1px dashed #ffb25a;
-      min-height: 72px;
+      min-height: 90px; /* 박스 높이도 조금 키움 */
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .fortune-text {
-      font-size: 15px;
+      font-size: 16px;
       color: #333333;
-      line-height: 1.6;
+      line-height: 1.7;
       word-break: keep-all;
     }
 
     .buttons {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
     }
@@ -104,7 +104,7 @@
     .btn {
       border: none;
       border-radius: 999px;
-      padding: 11px 18px;
+      padding: 12px 20px;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
@@ -132,8 +132,8 @@
     }
 
     .footer {
-      margin-top: 12px;
-      font-size: 11px;
+      margin-top: 14px;
+      font-size: 12px;
       color: #aaaaaa;
     }
 
@@ -144,7 +144,7 @@
 
     @media (max-width: 400px) {
       .card {
-        padding: 24px 18px 22px;
+        padding: 28px 18px 24px;
       }
       h1 {
         font-size: 22px;
@@ -201,7 +201,7 @@
       dateEl.textContent = year + "년 " + month + "월 " + day + "일 " + "(" + weekday + ")";
     }
 
-    // 랜덤 운세 목록 (원하면 이 문구들 마음대로 바꿔도 됨!)
+    // 랜덤 운세 목록
     const fortunes = [
       "오늘은 생각보다 일이 잘 풀리는 날. 너무 겁먹지 말고 한 걸음만 더 나가도 좋음.",
       "지금 하고 있는 선택이 앞으로 꽤 큰 힘이 될 예정. 꾸준함이 곧 능력임.",
@@ -245,9 +245,8 @@
       textEl.textContent = getRandomFortune();
     }
 
-    // 페이지 열리면 날짜 세팅 + 자동으로 한 번 뽑아주기
+    // 페이지 열리면 날짜만 세팅 (운세는 버튼 눌러야 보이게)
     setToday();
-    openCookie();
   </script>
 </body>
 </html>
