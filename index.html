@@ -17,13 +17,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* 그라데이션 배경 */
+
+      /* 부드러운 그라데이션 */
       background: linear-gradient(135deg, #ffe7c2, #ffc48a, #ffb06a);
     }
 
     .wrapper {
       width: 100%;
-      max-width: 580px; /* 중앙 흰 네모 전체를 더 키움 */
+      max-width: 580px;
       padding: 24px;
     }
 
@@ -76,13 +77,13 @@
       margin-bottom: 18px;
     }
 
-    /* 운세 박스 더 키움 */
+    /* 운세 박스 크게 */
     .fortune-box {
       background: #fff8ec;
       border-radius: 18px;
       padding: 30px 22px;
       border: 1px dashed #ffb25a;
-      min-height: 150px; /* 높이 증가 */
+      min-height: 150px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -91,7 +92,7 @@
     }
 
     .fortune-text {
-      font-size: 20px; /* 글자도 조금 더 크게 */
+      font-size: 20px;
       color: #333;
       line-height: 1.8;
       word-break: keep-all;
@@ -99,6 +100,7 @@
       font-weight: 500;
     }
 
+    /* 가림막 */
     .fortune-cover {
       position: absolute;
       inset: 0;
@@ -174,7 +176,7 @@
       color: #ff8a23;
     }
 
-    /* 쿠키 깨지는 애니메이션 */
+    /* 쿠키 깨짐 애니메이션 */
     @keyframes cookieCrack {
       0%   { transform: scale(1) rotate(0deg); opacity: 1; }
       20%  { transform: scale(1.15) rotate(4deg); }
@@ -202,6 +204,7 @@
   </style>
 </head>
 <body>
+
   <div class="wrapper">
     <div class="card">
       <div class="badge">오늘만 열리는 한 마디</div>
@@ -238,10 +241,11 @@
     </div>
   </div>
 
-  <!-- 쿠키 깨지는 사운드 파일 (동일 폴더에 cookie-crack.mp3 필요) -->
+  <!-- 사운드 -->
   <audio id="crackSound" src="cookie-crack.mp3" preload="auto"></audio>
 
   <script>
+    /* 날짜 표시 */
     function setToday() {
       const dateEl = document.getElementById("dateText");
       const now = new Date();
@@ -252,29 +256,70 @@
       dateEl.textContent = `${y}년 ${m}월 ${d}일 (${w})`;
     }
 
-    const fortunes = [
-      "오늘은 생각보다 일이 잘 풀리는 날. 너무 겁먹지 말고 한 걸음만 더 나가도 좋음.",
-      "지금 하고 있는 선택이 앞으로 꽤 큰 힘이 될 예정. 꾸준함이 곧 능력임.",
-      "오늘 만나는 사람 중 누군가는 너를 꽤 괜찮게 보고 있음. 스스로를 너무 깎아내리지 말기.",
-      "평소에 미뤄둔 일을 하나만 정해서 끝내보자. 그 한 가지가 오늘 운세를 끌어올려 줌.",
-      "실수해도 괜찮음. 중요한 건 오늘 다시 시작했다는 사실 자체임.",
-      "작은 친절 하나가 생각보다 멀리 퍼져 나가는 날. 먼저 웃어주면 이득.",
-      "오늘은 몸과 멘탈 리셋하는 날로 잡아도 좋음. 쉬는 것도 생산적인 선택임.",
-      "걱정하는 일의 절반 이상은 실제로 일어나지 않음.",
-      "오늘 떠오른 아이디어는 그냥 지나치기 아까움. 메모라도 꼭 해두기.",
-      "너무 완벽하려 하지 말기. 지금도 충분히 멋짐.",
-      "오늘은 새로운 시도를 해볼 운세. 평소라면 안 할 선택을 골라도 좋음.",
-      "네가 생각하는 것보다 이미 잘하고 있음. 스스로에게 친절해지기.",
-      "잠깐의 휴식만으로도 분위기가 확 달라지는 날.",
-      "‘고마워’라는 말을 많이 쓸수록 운이 올라가는 날.",
-      "오늘의 짧은 집중은 큰 성과를 만들어냄.",
-      "너는 지금도 충분히 멋지고 잘하고 있음."
+    /* ====== 3,375개 조합 랜덤 운세 ====== */
+
+    const openings = [
+      "오늘은 생각보다 네 편인 날.",
+      "조용하지만 흐름이 좋은 날.",
+      "마음먹은 대로 길이 트이는 날.",
+      "생각보다 주변 사람이 많이 도와주는 날.",
+      "기대하지 않았던 순간에서 웃을 일이 생기는 날.",
+      "기분 전환하기에 딱 좋은 날.",
+      "새로운 시작을 꺼내보기에 괜찮은 날.",
+      "지금까지의 수고를 스스로 안아줘야 하는 날.",
+      "네가 가진 장점이 더 잘 보이는 날.",
+      "작은 선택 하나가 분위기를 바꾸는 날.",
+      "포기했던 걸 다시 꺼내봐도 좋은 날.",
+      "평소보다 감이 잘 살아나는 날.",
+      "마음이 유난히 예민하면서도 섬세해지는 날.",
+      "생각보다 나쁘지 않네, 싶은 날.",
+      "네가 생각하는 것보다 훨씬 잘 버티고 있는 날."
+    ];
+
+    const middles = [
+      "조급해하지 말고 네 템포를 지키면 좋겠음.",
+      "눈에 안 띄는 노력들이 서서히 모이고 있음.",
+      "비교하는 순간 힘이 빠지니, 오늘만큼은 네 페이스로 가보기.",
+      "괜히 불안하면 잠깐 숨 고르고 다시 출발해도 괜찮음.",
+      "완벽하지 않아도 이미 충분히 의미 있는 하루가 될 수 있음.",
+      "애매한 기분이 들면, 잠깐 산책이나 물 한 잔으로 리셋해보기.",
+      "작은 실수에 너무 오래 매달리지 말기.",
+      "네가 모르는 사이 누군가는 너를 꽤 괜찮다고 생각하고 있음.",
+      "대단한 계획보다, 오늘 한 가지를 끝내는 게 더 힘이 됨.",
+      "힘들었다면 인정하고, 잠깐 기대도 괜찮음.",
+      "오늘 느낀 생각과 감정은 분명 다음 선택에 도움이 될 거임.",
+      "괜히 불편한 사람이 있다면 거리를 조금 두어도 됨.",
+      "네가 했던 선택을 스스로 믿어주는 게 지금 가장 중요함.",
+      "하고 싶은 말이 있다면, 오늘은 조금 더 부드럽게 꺼내보자.",
+      "애써 괜찮은 척 안 해도 괜찮은 날이기도 함."
+    ];
+
+    const endings = [
+      "너는 이미 충분히 잘하고 있으니까.",
+      "조금 천천히 가도 결국 도착하게 되어 있으니까.",
+      "네가 쌓아둔 시간은 절대 헛되지 않을 거라서.",
+      "지금의 고민도 언젠가는 추억으로 웃으며 말하게 될 거라서.",
+      "오늘 하루만큼은 스스로를 좀 더 편하게 대해주길.",
+      "너를 응원하는 마음들이 생각보다 훨씬 많다는 걸 잊지 말길.",
+      "지금 이 순간도 분명 네 성장에 포함되어 있으니까.",
+      "내일의 너는 오늘의 너에게 분명 고마워할 거라서.",
+      "조금만 더 가면 ‘그래도 해보길 잘했다’라는 말이 나올 거니까.",
+      "너는 생각보다 단단하고, 생각보다 따뜻한 사람이라서.",
+      "이 정도면 진짜 잘 버티고 있는 거니까, 스스로 칭찬해주길.",
+      "오늘 느끼는 이 묘한 감정도 언젠가 네 색깔이 되어줄 거라서.",
+      "너 하나만큼은, 오늘만은 네 편이 되어주면 좋겠어서.",
+      "어느 방향으로 가든 결국 너답게 도착하게 되어 있으니까.",
+      "오늘도 네 하루가 너무 과하게 힘들지 않기를 바라면서."
     ];
 
     function getRandomFortune() {
-      return fortunes[Math.floor(Math.random() * fortunes.length)];
+      const o = openings[Math.floor(Math.random() * openings.length)];
+      const m = middles[Math.floor(Math.random() * middles.length)];
+      const e = endings[Math.floor(Math.random() * endings.length)];
+      return o + " " + m + " " + e;
     }
 
+    /* 사운드 */
     function playCrackSound() {
       const audio = document.getElementById("crackSound");
       try {
@@ -283,6 +328,7 @@
       } catch(e){}
     }
 
+    /* 포춘쿠키 열기 */
     function openCookie() {
       const textEl = document.getElementById("fortuneText");
       const coverEl = document.getElementById("fortuneCover");
@@ -302,6 +348,7 @@
       shuffleBtn.disabled = false;
     }
 
+    /* 다시 뽑기 → 처음 상태로 되돌리기 */
     function shuffleFortune() {
       const textEl = document.getElementById("fortuneText");
       const coverEl = document.getElementById("fortuneCover");
@@ -312,6 +359,7 @@
       textEl.textContent = "";
       cookie.classList.remove("cookie-crack");
       coverEl.classList.remove("hide");
+
       openBtn.disabled = false;
       shuffleBtn.disabled = true;
     }
